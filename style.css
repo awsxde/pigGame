@@ -1,0 +1,21 @@
+body {
+  /* background-color: black;
+  color: wheat; */
+  font-family: Lato;
+}
+
+/* table {
+  width: 40vh;
+  height: 40vh;
+} */
+
+table,
+td {
+  border: 1px solid #333;
+}
+
+thead,
+tfoot {
+  background-color: #333;
+  color: #fff;
+}

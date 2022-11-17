@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pig game</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th style="height: 10vh">player 1</th>
+          <th>player 2</th>
+          <th class="random">0000000000</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="main1 activeMain" style="width: 20vh">0</td>
+          <td class="main2" style="width: 20vh">0</td>
+          <td rowspan="2" colspan="2">
+            <img src="./dice-6.png" alt="diceSix" width="100px" class="img" />
+          </td>
+        </tr>
+        <tr>
+          <td class="temp1 activeTemp">0</td>
+          <td class="temp2">0</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <button type="submit" class="newGame">new game</button>
+    <button type="submit" class="roll">roll dice</button>
+    <button type="submit" class="hold">hold</button>
+    <script src="./script.js"></script>
+  </body>
+</html>
