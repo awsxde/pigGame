@@ -1,74 +1,63 @@
-let cur = 0;
-// let main = 0;
-// let temp = 0;
-let randomNum = 0;
+//active player
+let activePlayer = 0;
+
+//elements
 let img = document.querySelector(".img");
+let random = document.querySelector(".random");
+let main = document.querySelector(`.main${activePlayer}`);
+let temp = document.querySelector(`.temp${activePlayer}`);
+
+//buttons
 let roll = document.querySelector(".roll");
 let hold = document.querySelector(".hold");
-let main1 = document.querySelector(".main1");
-let main2 = document.querySelector(".main2");
-let temp1 = document.querySelector(".temp1");
-let temp2 = document.querySelector(".temp2");
-let random = document.querySelector(".random");
 let newGame = document.querySelector(".newGame");
 
+//functions
 const makeRandom = () => Math.ceil(Math.random() * 6);
+const win = () => (random.textContent = `Player${activePlayer + 1} won!`);
+const switchSide = () => {
+  //reset temp
+  temp.textContent = 0;
 
+  //change side
+  activePlayer = activePlayer === 0 ? 1 : 0;
+
+  //reselect active player stuff
+  main = document.querySelector(`.main${activePlayer}`);
+  temp = document.querySelector(`.temp${activePlayer}`);
+};
+
+//start of app
 random.textContent = "Start...";
 
-function switchSide(target) {
-  if (target === 1) {
-    document.querySelector(".main1").classList.add("activeMain");
-    document.querySelector(".main2").classList.remove("activeMain");
-    document.querySelector(".temp1").classList.add("activeTemp");
-    document.querySelector(".temp2").classList.remove("activeTemp");
-    console.log(document.querySelector(".main1").classList);
-    console.log(document.querySelector(".main2").classList);
-    console.log(document.querySelector(".temp1").classList);
-    console.log(document.querySelector(".temp2").classList);
-  } else if (target === 2) {
-    document.querySelector(".main1").classList.remove("activeMain");
-    document.querySelector(".main2").classList.add("activeMain");
-    document.querySelector(".temp1").classList.remove("activeTemp");
-    document.querySelector(".temp2").classList.add("activeTemp");
-    console.log(document.querySelector(".main1").classList);
-    console.log(document.querySelector(".main2").classList);
-    console.log(document.querySelector(".temp1").classList);
-    console.log(document.querySelector(".temp2").classList);
-  }
-}
-
 roll.addEventListener("click", () => {
-  randomNum = makeRandom();
-  //temporary
+  //generate
+  let randomNum = makeRandom();
+
+  //display
   random.textContent = randomNum;
-  //display image
   img.src = `dice-${randomNum}.png`;
 
   //add to temp
-  cur = +temp1.textContent;
-  temp1.textContent = randomNum !== 1 ? cur + randomNum : cur + randomNum;
-  // switchSide();
-  // "Lost!"; (change player actually)
+  randomNum !== 1
+    ? (temp.textContent = +temp.textContent + randomNum)
+    : switchSide();
 });
 
-let count = 1;
-
 hold.addEventListener("click", () => {
-  document.querySelector(".activeMain").textContent =
-    +document.querySelector(".activeMain").textContent +
-    +document.querySelector(".activeTemp").textContent;
-  let value = +document.querySelector(".activeMain").textContent;
-  document.querySelector(".activeTemp").textContent = 0;
-  if (value >= 10) {
-    random.textContent = `Win`;
-  }
-  count = count === 1 ? 2 : 1;
-  switchSide(count);
+  //update main
+  main.textContent = +main.textContent + +temp.textContent;
+
+  //reset temp
+  temp.textContent = 0;
+
+  //check for win state or switch side
+  main.textContent >= 100 ? win() : switchSide();
 });
 
 newGame.addEventListener("click", () => {
-  main1.textContent = 0;
-  temp1.textContent = 0;
+  //reset everything
+  main.textContent = 0;
+  temp.textContent = 0;
   random.textContent = "Start...";
 });
